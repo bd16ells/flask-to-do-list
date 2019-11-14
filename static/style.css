@@ -1,0 +1,130 @@
+.addButton {
+    margin: 5px;
+    padding: 2px 15px;
+    background-color: green;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    transition: 0.2s;
+    border-radius: 4px;
+}
+
+#saveButton {
+  display: none;
+  margin: 5px;
+  padding: 2px 15px;
+  background-color: purple;
+  color: white;
+  cursor: pointer;
+  text-align: center;
+  transition: 0.2s;
+  border-radius: 4px;
+}
+
+.delete:hover, .edit:hover {
+    text-decoration: underline !important;
+    cursor: pointer !important;
+}
+
+.delete, .edit, .bar {
+    float: right;
+    color: #4286f4 !important;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.list-container {
+    margin-top: 10px;
+    padding: 5px;
+    border-style: solid;
+    border-width: 1.5px;
+    width: auto;
+    max-width: 600px;
+}
+
+label.complete {
+  text-decoration: line-through;
+}
+
+label {
+  cursor: pointer;
+}
+
+span.complete {
+  background-color: #4286f4;
+}
+
+li {
+    list-style: none;
+}
+span.checkmark {
+  cursor: pointer;
+}
+
+.task-container {
+    position: relative;
+    padding-left: 40px;
+    font-size: 20px;
+    text-decoration: none;
+   
+  }
+  
+  
+  /* Hide default checkbox */
+  .task-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  /* custom checkbox */
+  .checkmark {
+    margin-top:5px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+  }
+  
+  
+  /* add a blue background when checked */
+  .task-container input:checked ~ .checkmark {
+    background-color: #4286f4;
+  }
+  
+  /* Create the checkmark/indicator*/
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  
+  /* Show the checkmark when checked */
+  .complete.checkmark:after {
+    display: inline;
+    
+  }
+  
+  /* Style the checkmark */
+  .task-container .checkmark:after {
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+  }
+
+input[type="text"]
+{
+    font-size:14px;
+}
+
+
+input[type="checkbox"] {
+    float: left;
+}

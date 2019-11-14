@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Task List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+        media="screen">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        window.onload = function () {
+            // so enter also triggers add button 
+            document.getElementById("newTask")
+                .addEventListener("keyup", function (event) {
+                    event.preventDefault();
+                    if (event.keyCode === 13) {
+                        document.getElementById("addButton").click();
+                    }
+                });
+        }
+        function addTask() {
+            var taskDesc = document.getElementById("newTask").value
+            if (taskDesc.length > 0) {
+                $.post("tasks", { 'description': taskDesc }, function () { });
+                document.location.reload()
+            } else {
+                alert("Must enter a task!")
+            }
+
+        }
+
+        function deleteTask(id) {
+            $.ajax({
+                url: '/tasks/' + id,
+                type: 'DELETE',
+                success: function (result) {
+                    document.location.reload()
+                }
+            });
+        }
+
+        function toggleComplete(id) {
+            var editInProgress = document.getElementById("task-" + id).contentEditable
+            if (editInProgress === "true") {
+                return false;
+            } else {
+                $.ajax({
+                    url: '/tasks/' + id + '/complete',
+                    type: 'PUT',
+                    success: function (result) {
+                        document.location.reload()
+                    }
+                });
+            }
+        }
+
+        function editTask(id) {
+            task = document.getElementById("task-" + id);
+            task.contentEditable = true;
+            document.getElementById("edit-task-" + id).style.display = 'contents';
+            task.focus()
+        }
+
+        function submitEdit(id) {
+            taskDesc = document.getElementById("task-" + id).innerHTML;
+            if (taskDesc.length > 0) {
+                $.ajax({
+                    url: '/tasks/' + id,
+                    type: 'PATCH',
+                    data: { 'description': taskDesc },
+                    success: function (result) {
+                        document.location.reload();
+                        document.getElementById("edit-task-" + id).style.display = 'none';
+                    }
+                });
+            } else {
+                alert("Must enter a task!")
+            }
+
+        }
+
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1 style="text-align: center;">To-Do List</h1>
+        <input type="text" id="newTask">
+        <button id="addButton" class="addButton" onclick="addTask()">Add Task</button>
+
+        <div class="list-container">
+            <ul>
+                {% for task in tasks %}
+                
+                <li class="task-container">
+                    <label id="task-{{task.id}}" class="{{'complete' if task.complete}}"
+                        onclick="toggleComplete({{task.id}})">{{ task.description }}</label>
+
+                    <input type="checkbox">
+                    <a id="edit-task-{{task.id}}" onclick="submitEdit({{task.id}})" class="edit"
+                        style="display:none">Submit</a>
+
+                    <span class="checkmark {{'complete' if task.complete}}"
+                        onclick="toggleComplete({{task.id}})"></span>
+
+                    <a onclick="editTask({{task.id}})" class="edit">Edit</a>
+                    <span class="bar"> | </span>
+                    <a onclick="deleteTask({{task.id}})" class="delete">Delete</a>
+                </li>
+
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>
