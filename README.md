@@ -12,6 +12,8 @@ $ pip install -r requirements.txt
 
 
 ## Initialize DB
+Put the path to your working directory, postfixed with database.db, in settings.py.
+`app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////absolute/path/to/database.db'`  
 
 ```bash
 $ python3
@@ -22,8 +24,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> db.create_all()  
 >>>
 ```
-This will add the database.db file to your directory. Put the path of this file in settings.py.
-`app.config['SQLALCHEMY_DATABASE_URI'] = 'path/to/database.db'`  
+This will create the database.db file.
 
 
 # Run app
