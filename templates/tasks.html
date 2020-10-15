@@ -23,8 +23,9 @@
         function addTask() {
             var taskDesc = document.getElementById("newTask").value
             if (taskDesc.length > 0) {
-                $.post("tasks", { 'description': taskDesc }, function () { });
-                document.location.reload()
+                $.post("tasks", { 'description': taskDesc }, function () { }).then(
+                    document.location.reload()
+                )
             } else {
                 alert("Must enter a task!")
             }
